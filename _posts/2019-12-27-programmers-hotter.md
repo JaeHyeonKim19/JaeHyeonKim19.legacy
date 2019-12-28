@@ -4,6 +4,8 @@ date: 2019-12-27 08:26:28 -0400
 categories: Heap Programmers
 ---
 
+> 자체풀이
+
 ```java
 import java.util.*;
 class Solution {
@@ -43,6 +45,8 @@ class Solution {
 - 결과
   - 정확성: 2, 3, 7, 10, 15 실패
   - 효율성: 전체 실패
+
+> 자체풀이2(다 합쳐도 K를 넘을 수 없는 경우 추가)
 
 ```java
 import java.util.*;
@@ -136,7 +140,7 @@ class Solution {
         }
         return returnValue;
     }
-    
+
     public int solution(int[] scoville, int K) {
         int answer = 0;
         orderedScoville = new int[scoville.length];
