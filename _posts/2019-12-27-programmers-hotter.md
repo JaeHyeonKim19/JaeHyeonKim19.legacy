@@ -32,8 +32,6 @@ class Solution {
             criteria = scovilleList.get(0);
         }
 
-        // 링크드리스트?
-        // 시간복잡도 계산
         if(scovilleList.size()==1 && criteria<K){
             return -1;
         }
@@ -75,8 +73,6 @@ class Solution {
             criteria = scovilleList.get(0);
         }
 
-        // 링크드리스트?
-        // 시간복잡도 계산
         if(scovilleList.size()==1 && criteria<K){
             return -1;
         }
@@ -88,3 +84,100 @@ class Solution {
 - 결과
   - 정확성: 전체 통과
   - 효율성: 전체 실패
+
+> min Heap의 일부를 직접 구현
+
+```java
+class Solution {
+    int [] orderedScoville;
+    int currentIndex = -1;
+
+    void offer(int newVal){
+        currentIndex++;
+        orderedScoville[currentIndex] = newVal;
+        int temp = currentIndex;
+        while(temp!=0){
+            if(orderedScoville[temp]<orderedScoville[(temp+1)/2-1]){
+                int changingTemp = orderedScoville[(temp+1)/2-1];
+                orderedScoville[(temp+1)/2-1] = orderedScoville[temp];
+                orderedScoville[temp] = changingTemp;
+                temp = (temp+1)/2-1;
+            }else{
+                break;
+            }
+        }
+    }
+
+    int poll(){
+        int returnValue = orderedScoville[0];
+        orderedScoville[0] = orderedScoville[currentIndex];
+        orderedScoville[currentIndex] = 0;
+        currentIndex--;
+        int temp = 0;
+        while(true){
+        	int smallChildIndex = 0;
+        	int firstChildIndex = (temp+1)*2-1;
+        	int secondChildIndex = (temp+1)*2;
+        	if(firstChildIndex<=currentIndex && secondChildIndex<=currentIndex) {
+            	smallChildIndex = orderedScoville[firstChildIndex]>orderedScoville[secondChildIndex]?secondChildIndex:firstChildIndex;
+            }else if(firstChildIndex<=currentIndex && secondChildIndex>currentIndex) {
+            	smallChildIndex = firstChildIndex;
+            }else {
+            	break;
+            }
+            if(orderedScoville[temp]>orderedScoville[smallChildIndex]){
+                int changingTemp = orderedScoville[smallChildIndex];
+                orderedScoville[smallChildIndex] = orderedScoville[temp];
+                orderedScoville[temp] = changingTemp;
+                temp = smallChildIndex;
+            }else{
+                break;
+            }
+        }
+        return returnValue;
+    }
+    
+    public int solution(int[] scoville, int K) {
+        int answer = 0;
+        orderedScoville = new int[scoville.length];
+        for(int i = 0;i<scoville.length;i++)
+            offer(scoville[i]);
+        while(orderedScoville[0]<K && currentIndex>0){
+            answer++;
+            offer(poll()+poll()*2);
+        }
+        if(currentIndex==0&&orderedScoville[0]<K)
+            return -1;
+        return answer;
+    }
+}
+```
+
+- 결과
+  - 정확성: 전체 통과
+  - 효율성: 전체 통과
+
+> min Heap을 응용하여 구현된 우선순위 큐를 활용한 풀이
+
+```java
+import java.util.*;
+class Solution {
+    public int solution(int[] scoville, int K) {
+        int answer = 0;
+        PriorityQueue<Integer> scovillePriorityQueue = new PriorityQueue<Integer>();
+        for(int scovilleValue:scoville)
+            scovillePriorityQueue.offer(scovilleValue);
+        while(scovillePriorityQueue.peek()<K && scovillePriorityQueue.size()>1){
+            answer++;
+            scovillePriorityQueue.offer(scovillePriorityQueue.poll()+scovillePriorityQueue.poll()*2);
+        }
+        if(scovillePriorityQueue.size()==1 && scovillePriorityQueue.peek()<K)
+            return -1;
+        return answer;
+    }
+}
+```
+
+- 결과
+  - 정확성: 전체 통과
+  - 효율성: 전체 통과
