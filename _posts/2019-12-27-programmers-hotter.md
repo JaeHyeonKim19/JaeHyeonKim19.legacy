@@ -1,5 +1,5 @@
 ---
-title: "프로그래머스 더 맵게(유형:힙)"
+title: "프로그래머스 더 맵게"
 date: 2019-12-27 08:26:28 -0400
 categories: Heap Programmers
 ---
