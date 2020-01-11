@@ -24,3 +24,7 @@ categories: get post httpmethods
 
 - GET은 Idempotent하도록 설계되었고 POST는 Non-idempotent하게 설계되었다. Idempotent하다는 것은 여러 번 수행되어도 동일한 결과가 나타난다는 것.
 - POST를 생성, 수정, 삭제에 활용 할 수 있지만 메소드의 의미적으로는 생성에는 POST, 수정에는 PUT 또는 PATCH, 삭제에는 DELETE가 더 용도에 맞는 메소드이다.
+
+### 부수적인 차이
+
+- 부수적인 차이점을 좀 더 살펴보자면 GET 방식의 요청은 브라우저에서 Caching 할 수 있다. 때문에 POST 방식으로 요청해야 할 것을 보내는 데이터의 크기가 작고 보안적인 문제가 없다는 이유로 GET 방식으로 요청한다면 기존에 caching 되었던 데이터가 응답될 가능성이 존재한다. 때문에 목적에 맞는 기술을 사용해야 하는 것이다.
