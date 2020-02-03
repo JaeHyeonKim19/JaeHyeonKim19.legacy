@@ -1,7 +1,7 @@
 ---
 title: "[자바]백준 9020 골등바흐의 추측"
 date: 2020-01-19 08:26:28 -0400
-categories: goldbachsconjecture
+categories: goldbachs
 ---
 
 ```java
